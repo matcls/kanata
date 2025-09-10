@@ -21,13 +21,21 @@ jobs:
         shell: bash
         run: |
           mkdir -p artifacts
-          cargo build --release --target x86_64-pc-windows-msvc
-          move target\release\kanata.exe artifacts\kanata_windows_x64.exe
-          cargo build --release --features cmd --target x86_64-pc-windows-msvc
-          move target\release\kanata.exe artifacts\kanata_windows_cmd_allowed_x64.exe
+          cargo build --release --features win_manifest,win_sendinput_send_scancodes,win_llhook_read_scancodes,cmd --target x86_64-pc-windows-msvc
+          mv D:/a/kanata/kanata/target/x86_64-pc-windows-msvc/release/kanata.exe artifacts/kanata_windows_x64.exe
+      # - name: List target directory
+        # shell: bash
+        # run: ls -l D:/a/kanata/kanata/target/x86_64-pc-windows-msvc/release/
+      # - name: List target directory
+      #   shell: bash
+      #   run: ls -l D:/a/kanata/kanata/target/release/build
+      #   run: ls -l artifacts
+          # mv target/release/kanata.exe artifacts/kanata_windows_x64.exe
+          # cargo build --release --features cmd --target x86_64-pc-windows-msvc
+          # mv target/release/kanata.exe artifacts/kanata_windows_cmd_allowed_x64.exe
       - uses: actions/upload-artifact@v4
         with:
           name: windows-binaries-x64
           path: |
             artifacts/kanata_windows_x64.exe
-            artifacts/kanata_windows_cmd_allowed_x64.exe
+    
